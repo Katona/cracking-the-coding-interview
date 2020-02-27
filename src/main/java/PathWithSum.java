@@ -6,11 +6,28 @@ public class PathWithSum {
             return 0;
         }
         int remaining = sum - node.value;
+        int totalCount = 0;
         if (remaining == 0) {
-            return 1;
+            totalCount++;
         }
-        int leftCount = countPathWithSum(remaining, node.left) + countPathWithSum(sum, node.left);
-        int rightCount = countPathWithSum(remaining, node.right) + countPathWithSum(sum, node.right);
-        return leftCount + rightCount;
+        totalCount += countDirectPathWithSum(remaining, node.left) + countPathWithSum(sum, node.left);
+        totalCount += countDirectPathWithSum(remaining, node.right) + countPathWithSum(sum, node.right);
+
+        return totalCount;
+    }
+
+    private int countDirectPathWithSum(int sum, Node<Integer> node) {
+        if (node == null) {
+            return 0;
+        }
+        int remaining = sum - node.value;
+        int totalCount = 0;
+        if (remaining == 0) {
+            totalCount++;
+        }
+        totalCount += countDirectPathWithSum(remaining, node.left);
+        totalCount += countDirectPathWithSum(remaining, node.right);
+
+        return totalCount;
     }
 }
